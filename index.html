@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BUILD FORGE Projects | End‑to‑End Project Creation & Documentation</title>
+  <meta name="description" content="BUILD FORGE Projects – We create, develop, and fully document Computer Science, BCA, and BBA projects at low cost. Fill our Google Form to get started." />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0b1020;           /* dark indigo */
+      --bg-soft:#0f1730;
+      --card:#0c1328;
+      --text: #e6eaf6;
+      --muted:#a8b2d1;
+      --brand:#6EE7B7;        /* green */
+      --brand-2:#60A5FA;      /* blue */
+      --accent:#F59E0B;       /* amber */
+      --error:#ef4444;
+      --ring: rgba(110,231,183,.45);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+
+    /* Light theme (auto on prefers) */
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg:#ffffff; --bg-soft:#f6f7fb; --card:#ffffff; --text:#0b1020; --muted:#4b5563; --shadow:0 12px 30px rgba(2,6,23,.08);
+      }
+    }
+
+    [data-theme="light"]{ --bg:#ffffff; --bg-soft:#f6f7fb; --card:#ffffff; --text:#0b1020; --muted:#4b5563; --shadow:0 12px 30px rgba(2,6,23,.08); }
+
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", sans-serif;
+      background: radial-gradient(1200px 600px at 70% -10%, rgba(96,165,250,.15), transparent 60%),
+                  radial-gradient(800px 400px at -10% 20%, rgba(110,231,183,.15), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.6; overflow-x:hidden;
+    }
+
+    /* Layout */
+    .container{ width: min(1100px, 92vw); margin: 0 auto; }
+
+
+    header {
+  position: sticky; 
+  top: 0; 
+  z-index: 50; 
+  backdrop-filter: blur(10px);
+  background: linear-gradient(to bottom, rgba(11,16,32,.85), rgba(11,16,32,.55));
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+}
+
+header .logo {
+  height: 50px; /* Adjust logo size */
+}
+    header{
+        
+      position: sticky; top:0; z-index:50; backdrop-filter: blur(10px);
+      background: linear-gradient( to bottom, rgba(11,16,32,.85), rgba(11,16,32,.55));
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .nav{ display:flex; align-items:center; justify-content:space-between; padding: 14px 0; }
+    .brand{ display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--text); }
+    .logo{ width:36px; height:36px; border-radius:10px; display:grid; place-items:center; font-weight:800; font-size:18px; color:#0b1020; background:conic-gradient(from 120deg, var(--brand), var(--brand-2)); box-shadow: var(--shadow); }
+    .brand span{ font-weight:800; letter-spacing:.3px; }
+
+    nav ul{ display:flex; gap: 18px; list-style:none; padding:0; margin:0; }
+    nav a{ color:var(--text); text-decoration:none; font-weight:600; opacity:.9; }
+    nav a:hover{ opacity:1; }
+
+    .theme-toggle{ border:1px solid rgba(255,255,255,.12); background:transparent; color:var(--text); border-radius:12px; padding:8px 12px; cursor:pointer; display:flex; align-items:center; gap:8px; }
+
+    /* Mobile nav */
+    .menu-btn{ display:none; }
+    @media (max-width: 900px){
+      nav ul{ display:none; }
+      .menu-btn{ display:inline-flex; }
+      .mobile{ position:fixed; inset:64px 0 auto 0; background:var(--bg-soft); border-bottom:1px solid rgba(255,255,255,.06); display:none; }
+      .mobile.open{ display:block; }
+      .mobile a{ display:block; padding:14px 20px; text-decoration:none; color:var(--text); border-top:1px solid rgba(255,255,255,.06); }
+    }
+
+    /* Hero */
+    .hero{ padding: 72px 0 40px; position:relative; }
+    .badge{ display:inline-flex; gap:8px; align-items:center; background:rgba(96,165,250,.15); color:#cfe6ff; border:1px solid rgba(96,165,250,.45); padding:6px 12px; border-radius:999px; font-size:12px; font-weight:700; letter-spacing:.4px; text-transform:uppercase; }
+    .hero h1{ font-size: clamp(28px, 5vw, 52px); line-height:1.1; margin:18px 0 12px; letter-spacing:.3px; }
+    .sub{ color:var(--muted); font-size: clamp(14px, 1.8vw, 18px); max-width: 760px; }
+    .ctas{ display:flex; gap:12px; margin-top:24px; flex-wrap:wrap; }
+    .btn{ padding:12px 18px; border-radius:12px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(255,255,255,.12); }
+    .btn.primary{ background: linear-gradient(135deg, var(--brand), var(--brand-2)); color:#0b1020; border-color:transparent; }
+    .btn.ghost{ background:transparent; color:var(--text); }
+    .pill{ display:inline-flex; align-items:center; gap:8px; border:1px dashed rgba(255,255,255,.2); padding:8px 12px; border-radius:999px; font-size:12px; color:var(--muted); margin-top:18px; }
+
+    /* Trust row */
+    .trust{ display:grid; grid-template-columns: repeat(4,1fr); gap:14px; margin-top:32px; }
+    .trust .card{ background:var(--card); border:1px solid rgba(255,255,255,.06); border-radius: var(--radius); padding:16px; display:flex; gap:12px; align-items:center; }
+    .trust .num{ font-weight:900; font-size:22px; }
+    .trust .lbl{ color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.3px; }
+    @media (max-width:800px){ .trust{ grid-template-columns:1fr 1fr; } }
+
+    /* Services */
+    section{ padding: 56px 0; }
+    .section-title{ font-size:32px; margin:0 0 8px; }
+    .section-sub{ color:var(--muted); margin:0 0 24px; }
+
+    .grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; }
+    @media (max-width: 900px){ .grid{ grid-template-columns: 1fr; } }
+
+    .card{ background:var(--card); border:1px solid rgba(255,255,255,.06); border-radius: var(--radius); padding:24px; box-shadow: var(--shadow); }
+    .card h3{ margin-top:0; }
+    .chiprow{ display:flex; gap:8px; flex-wrap:wrap; }
+    .chip{ font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.1); color:var(--muted); }
+
+    /* Estimator */
+    .estimator{ display:grid; grid-template-columns: 1.1fr .9fr; gap:18px; }
+    @media (max-width: 900px){ .estimator{ grid-template-columns: 1fr; } }
+    .field{ margin-bottom:16px; }
+    label{ display:block; font-weight:700; margin-bottom:8px; }
+    select, input[type="range"], input[type="text"], textarea{
+      width:100%; padding:12px 14px; border-radius:12px; background:var(--bg-soft); color:var(--text);
+      border:1px solid rgba(255,255,255,.12); outline: none; box-shadow: inset 0 2px 0 rgba(255,255,255,.03);
+    }
+    input[type="range"]{ height: 32px; }
+    .price-box{ display:grid; gap:10px; }
+    .price{ font-size:36px; font-weight:900; }
+    .muted{ color:var(--muted); }
+    .guarantee{ display:flex; gap:10px; align-items:center; font-weight:700; color:#062814; background:rgba(110,231,183,.25); border:1px solid var(--ring); padding:10px 12px; border-radius:14px; }
+
+    /* Carousel */
+    .carousel{ position:relative; overflow:hidden; border-radius:var(--radius); }
+    .slides{ display:flex; transition: transform .5s ease; }
+    .slide{ min-width:100%; padding:22px; }
+    .dots{ display:flex; gap:8px; justify-content:center; margin-top:12px; }
+    .dot{ width:10px; height:10px; border-radius:999px; background:rgba(255,255,255,.25); cursor:pointer; }
+    .dot.active{ background:linear-gradient(135deg,var(--brand),var(--brand-2)); }
+
+    /* FAQ */
+    details{ background:var(--card); border:1px solid rgba(255,255,255,.06); border-radius:14px; padding:12px 16px; }
+    details + details{ margin-top:10px; }
+    summary{ cursor:pointer; font-weight:700; }
+
+    /* Footer */
+    footer{ padding: 36px 0 40px; border-top: 1px solid rgba(255,255,255,.08); background: linear-gradient( to top, rgba(0,0,0,.15), transparent ); }
+    .foot-grid{ display:grid; grid-template-columns: 2fr 1fr 1fr; gap:18px; }
+    @media (max-width:900px){ .foot-grid{ grid-template-columns:1fr; } }
+    .socials{ display:flex; gap:10px; }
+    .socials a{ display:inline-flex; width:36px; height:36px; border-radius:10px; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,.12); text-decoration:none; }
+
+    /* Utilities */
+    .hide{ display:none; }
+    .center{ text-align:center; }
+    .mt-12{ margin-top:12px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+  <a class="brand" href="#home">
+    <img src="https://i.ibb.co/tTHGgXrr/build-forge-logo.png" alt="Build Forge Projects Logo" class="logo">
+    <span>BUILD FORGE Projects</span>
+  </a>
+  <nav>
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#estimate">Estimate</a></li>
+      <li><a href="#work">How we work</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <div style="display:flex; gap:8px; align-items:center;">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙 <span class="hide sm-show">Theme</span></button>
+    <button class="theme-toggle menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+    <a class="btn primary" href="https://forms.gle/ErJmd6GEVw2Ay7M58" target="_blank" rel="noopener">Get a Project</a>
+  </div>
+</div>
+    <!-- <div class="container nav">
+      <a class="brand" href="#home">
+        <div class="logo" ></div>
+        <span>BUILD FORGE Projects</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#estimate">Estimate</a></li>
+          <li><a href="#work">How we work</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙 <span class="hide sm-show">Theme</span></button>
+        <button class="theme-toggle menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+        <a class="btn primary" href="https://forms.gle/ErJmd6GEVw2Ay7M58" target="_blank" rel="noopener">Get a Project</a>
+      </div>
+    </div> -->
+    <br>
+    <div class="mobile" id="mobileMenu">
+      <a href="#services">Services</a>
+      <a href="#estimate">Estimate</a>
+      <a href="#work">How we work</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+      <a href="https://forms.gle/ErJmd6GEVw2Ay7M58" target="_blank" rel="noopener">Get a Project →</a>
+    </div>
+  </header>
+
+  <main id="home" class="container hero">
+    <span class="badge">End‑to‑End Project Creation • Development • Full Documentation</span>
+    <h1>We build your academic & capstone projects—start to submit—at a <span style="background:linear-gradient(135deg,var(--brand),var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent;">low cost</span>.</h1>
+    <p class="sub">At <strong>BUILD FORGE Projects</strong>, we plan, create, develop, and fully document projects for <strong>Computer Science</strong>, <strong>BCA</strong>, and <strong>BBA</strong>. From idea to viva, we’re your project partner.</p>
+    <div class="ctas">
+      <a class="btn primary" href="https://forms.gle/ErJmd6GEVw2Ay7M58" target="_blank" rel="noopener">Fill Google Form</a>
+      <a class="btn ghost" href="#estimate">Get Instant Estimate</a>
+      <button class="btn ghost" id="openForm">Open Form in Page</button>
+    </div>
+    <div class="pill">⚡ Quick delivery • 📚 Full report & PPT • 🧑‍🏫 Viva prep included</div>
+
+    <div class="trust">
+      <div class="card"><div>
+        <div class="num" id="stat1">0</div>
+        <div class="lbl">Projects Done</div>
+      </div></div>
+      <div class="card"><div>
+        <div class="num" id="stat2">0</div>
+        <div class="lbl">Avg. Turnaround (days)</div>
+      </div></div>
+      <div class="card"><div>
+        <div class="num" id="stat3">0</div>
+        <div class="lbl">Client Rating</div>
+      </div></div>
+      <div class="card"><div>
+        <div class="num" id="stat4">0</div>
+        <div class="lbl">Cost Saved vs. Market</div>
+      </div></div>
+    </div>
+  </main>
+
+  <section id="services">
+    <div class="container">
+      <h2 class="section-title">What we can build</h2>
+      <p class="section-sub">All kinds of CS, BCA, and BBA projects—with clean code and complete documentation (report, diagrams, PPT, and viva Q&A).</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Computer Science Projects</h3>
+          <p class="muted">Web, mobile, ML/AI, data science, networking, OS, DBMS, IoT—even mini‑projects.</p>
+          <div class="chiprow">
+            <span class="chip">Python / Java / C++</span>
+            <span class="chip">Web & Mobile</span>
+            <span class="chip">ML & Data</span>
+            <span class="chip">Cloud</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>BCA Projects</h3>
+          <p class="muted">Full‑stack apps, desktop tools, DBMS apps, OOP projects, DSA visualizers, and more.</p>
+          <div class="chiprow">
+            <span class="chip">Full Documentation</span>
+            <span class="chip">Source + Report</span>
+            <span class="chip">PPT + Viva Prep</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>BBA Projects</h3>
+          <p class="muted">Business analytics, marketing studies, HR/Finance systems, dashboards, and case studies.</p>
+          <div class="chiprow">
+            <span class="chip">Surveys & Analysis</span>
+            <span class="chip">Dashboards</span>
+            <span class="chip">Case Studies</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="estimate">
+    <div class="container estimator">
+      <div class="card">
+        <h2 class="section-title">Instant Estimate</h2>
+        <p class="section-sub">Get a ballpark cost & timeline—no signup needed. Final quote after requirements.</p>
+        <div class="field">
+          <label for="degree">Project Stream</label>
+          <select id="degree">
+            <option value="CS">Computer Science</option>
+            <option value="BCA">BCA</option>
+            <option value="BBA">BBA</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="complexity">Complexity</label>
+          <select id="complexity">
+            <option value="basic">Basic (mini‑project)</option>
+            <option value="standard" selected>Standard (major)
+            </option>
+            <option value="advanced">Advanced (custom/AI)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="urgency">Urgency: <span id="urgencyVal">14</span> days</label>
+          <input id="urgency" type="range" min="3" max="30" value="14" />
+        </div>
+        <div class="field">
+          <label for="pages">Report Length</label>
+          <select id="pages">
+            <option value="30">~30 pages</option>
+            <option value="50" selected>~50 pages</option>
+            <option value="80">~80 pages</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="desc">One‑line description (optional)</label>
+          <input id="desc" type="text" placeholder="e.g., Sales dashboard with forecasting" />
+        </div>
+        <div class="ctas">
+          <button class="btn primary" id="calc">Calculate</button>
+          <a class="btn ghost" href="https://forms.gle/ErJmd6GEVw2Ay7M58" target="_blank" rel="noopener">Proceed to Form</a>
+        </div>
+      </div>
+      <div class="card price-box">
+        <div class="guarantee">💸 Low‑cost Guarantee — we beat market rates</div>
+        <div>
+          <div class="muted">Estimated Price</div>
+          <div class="price" id="price">₹ —</div>
+          <div class="muted" id="breakdown"></div>
+        </div>
+        <div>
+          <div class="muted">Estimated Timeline</div>
+          <div class="price" id="timeline">— days</div>
+          <div class="muted">Includes development, documentation, and buffer.</div>
+        </div>
+        <div class="ctas">
+          <button class="btn primary" id="copyQuote">Copy Estimate</button>
+          <button class="btn ghost" id="shareBtn">Share</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="container">
+      <h2 class="section-title">How we work</h2>
+      <p class="section-sub">A transparent, student‑friendly workflow from idea to submission.</p>
+      <div class="grid">
+        <div class="card"><h3>1) Requirement Form</h3><p>Submit details via our Google Form. We review and reach you quickly.</p></div>
+        <div class="card"><h3>2) Free Consultation</h3><p>We finalize scope, tech stack, and milestones—no hidden costs.</p></div>
+        <div class="card"><h3>3) Build & Updates</h3><p>Agile sprints with demos. You always see progress.</p></div>
+        <div class="card"><h3>4) Documentation</h3><p>Full report, diagrams, dataset notes .</p></div>
+        <div class="card"><h3>5) Quality Check</h3><p>Plagiarism checks, code review, and performance tests.</p></div>
+        <div class="card"><h3>6) Viva Prep</h3><p>We share Q&A and brief you so you’re presentation‑ready.</p></div>
+      </div>
+
+      <div class="card" style="margin-top:18px;">
+        <h3 class="mt-12">What students say</h3>
+        <div class="carousel" id="carousel">
+          <div class="slides" id="slides">
+            <div class="slide">
+              <p>“They delivered my BCA DBMS project with a solid report and PPT. Cleared viva with ease!”</p>
+              <div class="muted">— Keerthi, BCA</div>
+            </div>
+            <div class="slide">
+              <p>“My ML project had clean code and explanations. Price was way lower than others.”</p>
+              <div class="muted">— Akash, CS</div>
+            </div>
+            <div class="slide">
+              <p>“Got a marketing analytics dashboard for BBA. On time and well documented.”</p>
+              <div class="muted">— Sana, BBA</div>
+            </div>
+          </div>
+        </div>
+        <div class="dots" id="dots"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="container">
+      <h2 class="section-title">FAQ</h2>
+      <p class="section-sub">Quick answers to common questions.</p>
+      <details>
+        <summary>Is the cost truly low?</summary>
+        <p>Yes—our operating model keeps prices student‑friendly. The estimator shows a fair ballpark; final quotes may be lower after we understand the scope.</p>
+      </details>
+      <details>
+        <summary>Do I get full documentation?</summary>
+        <p>Absolutely. You receive the complete report (DOC/PDF), diagrams, codebase, README, and a presentation deck. We also provide viva prep Q&A.</p>
+      </details>
+      <details>
+        <summary>What if I need changes?</summary>
+        <p>We include reasonable revisions aligned to the agreed scope. Extra features can be added via a change request.</p>
+      </details>
+      <details>
+        <summary>Can you sign an originality disclaimer?</summary>
+        <p>We follow academic integrity norms and provide original work tailored to your topic and guidelines.</p>
+      </details>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <div class="card">
+        <h2 class="section-title">Contact us</h2>
+        <p class="section-sub">For more details or custom requirements, reach us anytime.</p>
+        <div class="grid">
+          <div>
+            <p class="muted">Email</p>
+            <p><a href="mailto:bubuildforgeprojectsofficial@gmail.com" id="emailLink">bubuildforgeprojectsofficial@gmail.com</a> <button class="btn ghost" id="copyEmail">Copy</button></p>
+            <p class="muted">Start here</p>
+            <p><a class="btn primary" href="https://forms.gle/ErJmd6GEVw2Ay7M58" target="_blank" rel="noopener">Fill Google Form</a></p>
+          </div>
+          <form onsubmit="event.preventDefault(); document.getElementById('openForm').click();">
+            <label for="quick">Quick message (optional)</label>
+            <textarea id="quick" rows="4" placeholder="Tell us what you need. We'll follow up via email or the form."></textarea>
+            <div class="mt-12">
+              <button class="btn ghost" type="submit">Open Embedded Form</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container foot-grid">
+      <div>
+        <a class="brand" href="#home"><div class="logo">BF</div><span>BUILD FORGE Projects</span></a>
+        <p class="muted">We create, develop, and fully document CS, BCA, and BBA projects at low cost.</p>
+        <div class="socials">
+          <a href="#" aria-label="Email" title="Email" onclick="document.getElementById('copyEmail').click(); return false;">✉️</a>
+          <a href="#" aria-label="Share" title="Share" onclick="sharePage(); return false;">🔗</a>
+          <a href="#home" aria-label="Top" title="Back to top">⬆️</a>
+        </div>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul style="list-style:none; padding:0; margin:0; display:grid; gap:8px;">
+          <li><a href="#services">Services</a></li>
+          <li><a href="#estimate">Instant Estimate</a></li>
+          <li><a href="#work">Process</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Get Started</h4>
+        <a class="btn primary" href="https://forms.gle/ErJmd6GEVw2Ay7M58" target="_blank" rel="noopener">Fill Google Form</a>
+      </div>
+    </div>
+    <div class="container" style="margin-top:18px; color:var(--muted); font-size:12px;">© <span id="year"></span> BUILD FORGE Projects. All rights reserved.</div>
+  </footer>
+
+  <!-- Modal for embedded Google Form -->
+  <dialog id="formModal" style="border:none; border-radius:18px; width:min(980px,90vw); height:min(90vh,780px); padding:0; overflow:hidden;">
+    <div style="display:flex; align-items:center; justify-content:space-between; padding:12px 14px; background:var(--bg-soft); border-bottom:1px solid rgba(255,255,255,.1);">
+      <strong style="padding-left:8px;">Google Form</strong>
+      <div style="display:flex; gap:8px;">
+        <a class="btn ghost" href="https://forms.gle/ErJmd6GEVw2Ay7M58" target="_blank" rel="noopener">Open in new tab</a>
+        <button class="btn primary" id="closeModal">Close</button>
+      </div>
+    </div>
+    <iframe id="formFrame" src="" style="width:100%; height: calc(100% - 54px); border:0; background:#fff;"></iframe>
+  </dialog>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const stored = localStorage.getItem('theme');
+    if (stored) document.documentElement.setAttribute('data-theme', stored);
+    themeToggle.addEventListener('click', () => {
+      const cur = document.documentElement.getAttribute('data-theme');
+      const next = cur === 'light' ? '' : 'light';
+      if (next) document.documentElement.setAttribute('data-theme', next); else document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', next);
+      themeToggle.textContent = next ? '☀️' : '🌙';
+    });
+
+    // Mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const mobile = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', ()=> mobile.classList.toggle('open'));
+
+    // Smooth scroll for same‑page links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const id = a.getAttribute('href');
+        if (id.length > 1){ e.preventDefault(); document.querySelector(id).scrollIntoView({behavior:'smooth', block:'start'}); mobile.classList.remove('open'); }
+      });
+    });
+
+    // Animated stats
+    function countUp(el, to, dur=1200){
+      const start = performance.now();
+      const from = 0; const diff = to - from;
+      function frame(t){
+        const p = Math.min(1, (t - start)/dur);
+        const val = Math.floor(from + diff * (1 - Math.pow(1-p, 3))); // ease‑out
+        el.textContent = el.id === 'stat3' ? `${val}/5` : el.id === 'stat4' ? `${val}%` : val;
+        if (p < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+    const opts = [60, 10, 4.5, 35]; // demo numbers
+    const statsEls = [document.getElementById('stat1'), document.getElementById('stat2'), document.getElementById('stat3'), document.getElementById('stat4')];
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if (e.isIntersecting){ statsEls.forEach((el,i)=> countUp(el, opts[i])); obs.disconnect(); }
+      })
+    },{threshold:.25});
+    obs.observe(document.querySelector('.trust'));
+
+    // Estimator logic (simple student‑friendly model)
+    function estimate(){
+      const degree = document.getElementById('degree').value;
+      const complexity = document.getElementById('complexity').value;
+      const urgency = +document.getElementById('urgency').value;
+      const pages = +document.getElementById('pages').value;
+      const desc = document.getElementById('desc').value.trim();
+
+      // Base prices (low‑cost) in INR
+      const base = { CS: 2500, BCA: 2500, BBA: 1000 }[degree];
+      const mult = { basic: 1, standard: 1.6, advanced: 2.4 }[complexity];
+      const report = (pages - 30) * 25; // per page after 30
+      const rush = urgency <= 7 ? 1.5 : urgency <= 10 ? 1.15 : 1.0;
+      const price = Math.round((base * mult + report) * rush);
+
+      // Timeline baseline
+      let days = { basic: 7, standard: 12, advanced: 18 }[complexity];
+      days += Math.max(0, Math.round((pages - 30) / 10));
+      days = Math.max(days, urgency);
+
+      document.getElementById('price').textContent = `₹ ${price.toLocaleString('en-IN')}`;
+      document.getElementById('timeline').textContent = `${days} days`;
+      document.getElementById('breakdown').textContent = `Base: ₹${base} × ${mult} + report add‑on + ${rush>1? 'rush fee' : 'no rush fee'}${desc? ' • '+desc: ''}`;
+
+      return { degree, complexity, urgency, pages, desc, price, days };
+    }
+
+    // Events
+    const urgencyInput = document.getElementById('urgency');
+    const urgencyVal = document.getElementById('urgencyVal');
+    urgencyInput.addEventListener('input', () => urgencyVal.textContent = urgencyInput.value);
+    document.getElementById('calc').addEventListener('click', estimate);
+
+    // Copy & Share
+    function buildQuoteText(q){
+      return `BUILD FORGE Projects — Instant Estimate\n\nStream: ${q.degree}\nComplexity: ${q.complexity}\nUrgency: ${q.urgency} days\nReport: ~${q.pages} pages\n${q.desc? 'Notes: '+q.desc+'\n': ''}Estimated Price: ₹ ${q.price.toLocaleString('en-IN')}\nEstimated Timeline: ${q.days} days\n\nStart here: https://forms.gle/ErJmd6GEVw2Ay7M58`;
+    }
+
+    document.getElementById('copyQuote').addEventListener('click', async ()=>{
+      const q = estimate();
+      try{ await navigator.clipboard.writeText(buildQuoteText(q));
+        alert('Estimate copied to clipboard!');
+      }catch{ alert('Copy failed. Select and copy manually.'); }
+    });
+
+    function sharePage(){
+      if (navigator.share){
+        navigator.share({ title:'BUILD FORGE Projects', text:'Low‑cost CS/BCA/BBA projects with full documentation.', url: location.href }).catch(()=>{});
+      }else{
+        alert('Sharing not supported on this device.');
+      }
+    }
+    document.getElementById('shareBtn').addEventListener('click', sharePage);
+
+    // Carousel
+    const slides = document.getElementById('slides');
+    const dots = document.getElementById('dots');
+    let idx = 0; const total = slides.children.length;
+    for(let i=0;i<total;i++){ const d=document.createElement('div'); d.className='dot'+(i? '':' active'); d.addEventListener('click',()=>go(i)); dots.appendChild(d); }
+    function go(n){ idx=n; slides.style.transform = `translateX(-${n*100}%)`; dots.querySelectorAll('.dot').forEach((d,i)=> d.classList.toggle('active', i===n)); }
+    setInterval(()=> go((idx+1)%total), 3500);
+
+    // Email copy
+    document.getElementById('copyEmail').addEventListener('click', async ()=>{
+      const email = document.getElementById('emailLink').textContent.trim();
+      try{ await navigator.clipboard.writeText(email); alert('Email copied to clipboard'); }catch{ alert('Copy failed'); }
+    });
+
+    // Modal Form
+    const formUrl = 'https://forms.gle/ErJmd6GEVw2Ay7M58';
+    const modal = document.getElementById('formModal');
+    document.getElementById('openForm').addEventListener('click', ()=>{ document.getElementById('formFrame').src = formUrl; modal.showModal(); });
+    document.getElementById('closeModal').addEventListener('click', ()=> modal.close());
+
+    // Initial estimate preview
+    estimate();
+  </script>
+</body>
+</html>
